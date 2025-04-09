@@ -2,10 +2,22 @@ package com.mycompany.thebookofmonsters;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class View {
+
+    private static Image thePhoto;
+
+    static {
+        try {
+            thePhoto = ImageIO.read(View.class.getResourceAsStream("/фото.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void createAndShowGUI() {
         JFrame frame = new JFrame("Книга чудовищ");
@@ -41,10 +53,15 @@ public class View {
         frame.add(splitPane, BorderLayout.CENTER);
         frame.add(bottomPanel, BorderLayout.SOUTH);
 
+        makeSheetPanel();
         frame.setVisible(true);
     }
 
-    public static void chooseTxtFile() {
+    private static void  makeSheetPanel(){
+        
+    }
+    
+    public static String chooseTxtFile() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
 
@@ -52,6 +69,8 @@ public class View {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            return selectedFile.getAbsolutePath();
         }
+        return null;
     }
 }
