@@ -16,7 +16,7 @@ public abstract class AbstractParser implements Parser {
         } else if (nextParser != null) {
             nextParser.handle(fileName);
         } else {
-            System.out.println("No suitable parser found for: " + fileName);
+            System.out.println("No parser found for: " + fileName);
         }
     }
 

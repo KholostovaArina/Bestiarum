@@ -1,76 +1,92 @@
 package com.mycompany.thebookofmonsters;
 
+import javax.swing.*;
+import javax.swing.tree.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 public class View {
-
-    private static Image thePhoto;
-
-    static {
-        try {
-            thePhoto = ImageIO.read(View.class.getResourceAsStream("/фото.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void createAndShowGUI() {
-        JFrame frame = new JFrame("Книга чудовищ");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setLayout(new BorderLayout());
-
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Оглавление");
-        DefaultMutableTreeNode xmlNode = new DefaultMutableTreeNode("XML");
-        DefaultMutableTreeNode yamlNode = new DefaultMutableTreeNode("YAML");
-        DefaultMutableTreeNode jsonNode = new DefaultMutableTreeNode("JSON");
-
-        root.add(xmlNode);
-        root.add(yamlNode);
-        root.add(jsonNode);
-
-        JTree tree = new JTree(root);
-
-        JPanel sheetPanel = new JPanel();
-
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(tree), sheetPanel);
-        splitPane.setDividerLocation(150);
-
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());
-
-        JButton buttonImport = new JButton("Иморт");
-        JButton buttonExport = new JButton("Экспорт");
-
-        bottomPanel.add(buttonImport);
-        bottomPanel.add(buttonExport);
-
-        frame.add(splitPane, BorderLayout.CENTER);
-        frame.add(bottomPanel, BorderLayout.SOUTH);
-
-        makeSheetPanel();
-        frame.setVisible(true);
-    }
-
-    private static void  makeSheetPanel(){
-        
-    }
-    
-    public static String chooseTxtFile() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-
-        int result = fileChooser.showOpenDialog(null);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-            return selectedFile.getAbsolutePath();
-        }
-        return null;
-    }
+//    private static JTree tree;
+//    private static JTextArea infoArea;
+//
+//    public static void createAndShowGUI() {
+//        JFrame frame = new JFrame("Книга чудовищ");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(800, 600);
+//
+//        // Инициализация компонентов
+//        tree = new JTree(new DefaultMutableTreeNode("Чудовища"));
+//        infoArea = new JTextArea();
+//        infoArea.setEditable(false);
+//
+//        JButton importBtn = new JButton("Импорт");
+//        JButton exportBtn = new JButton("Экспорт");
+////        importBtn.addActionListener(e -> Controller.importFiles());
+////        exportBtn.addActionListener(e -> Controller.exportFiles());
+//
+//        // Компоновка интерфейса
+//        JPanel panel = new JPanel(new BorderLayout());
+//        panel.add(new JScrollPane(tree), BorderLayout.WEST);
+//        panel.add(new JScrollPane(infoArea), BorderLayout.CENTER);
+//
+//        JPanel btnPanel = new JPanel();
+//        btnPanel.add(importBtn);
+//        btnPanel.add(exportBtn);
+//
+//        frame.add(panel, BorderLayout.CENTER);
+//        frame.add(btnPanel, BorderLayout.SOUTH);
+//        frame.setVisible(true);
+//    }
+//
+//    public static String chooseTxtFile() {
+//        JFileChooser fc = new JFileChooser();
+//        fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+//        if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+//            return fc.getSelectedFile().getAbsolutePath();
+//        }
+//        return null;
+//    }
+//
+//    public static void updateTree() {
+//        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Чудовища");
+////        MonsterStorage storage = Controller.getStorage();
+//        
+//        DefaultMutableTreeNode jsonNode = new DefaultMutableTreeNode("JSON");
+////        storage.getMonstersByType("json").forEach(m -> jsonNode.add(new DefaultMutableTreeNode(m.getName())));
+//        root.add(jsonNode);
+//
+//        DefaultMutableTreeNode xmlNode = new DefaultMutableTreeNode("XML");
+////        storage.getMonstersByType("xml").forEach(m -> xmlNode.add(new DefaultMutableTreeNode(m.getName())));
+//        root.add(xmlNode);
+//
+//        DefaultMutableTreeNode yamlNode = new DefaultMutableTreeNode("YAML");
+////        storage.getMonstersByType("yaml").forEach(m -> yamlNode.add(new DefaultMutableTreeNode(m.getName())));
+//        root.add(yamlNode);
+//
+//        tree.setModel(new DefaultTreeModel(root));
+//    }
+//    
+//    public static void buildTree(MonsterStorage storage) {
+//        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Чудовища");
+//        
+//        // Для JSON
+//        DefaultMutableTreeNode jsonNode = new DefaultMutableTreeNode("JSON");
+//        storage.getMonstersByType("json").forEach(m -> 
+//            jsonNode.add(new DefaultMutableTreeNode(m.getName())));
+//        root.add(jsonNode);
+//        
+//        // Для XML
+//        DefaultMutableTreeNode xmlNode = new DefaultMutableTreeNode("XML");
+//        storage.getMonstersByType("xml").forEach(m -> 
+//            xmlNode.add(new DefaultMutableTreeNode(m.getName())));
+//        root.add(xmlNode);
+//        
+//        // Для YAML
+//        DefaultMutableTreeNode yamlNode = new DefaultMutableTreeNode("YAML");
+//        storage.getMonstersByType("yaml").forEach(m -> 
+//            yamlNode.add(new DefaultMutableTreeNode(m.getName())));
+//        root.add(yamlNode);
+//        
+//        tree.setModel(new DefaultTreeModel(root));
+//    }
 }

@@ -1,27 +1,51 @@
 package com.mycompany.thebookofmonsters;
 
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import org.yaml.snakeyaml.Yaml;
+import java.io.*;
+import java.util.*;
 
-public class YamlParser extends AbstractParser{
-    private final YAMLMapper mapper = new YAMLMapper();
-
+public class YamlParser extends AbstractParser {
     public YamlParser() {
         this.format = "yaml";
     }
 
+//    @Override
+//    protected void parse(String fileName) {
+//        try {
+//            Yaml yaml = new Yaml();
+//            InputStream inputStream = new FileInputStream(fileName);
+//
+//            // Предполагаем, что YAML файл содержит список монстров
+//            List<Map<String, Object>> yamlData = yaml.load(inputStream);
+//            List<Monster> monsters = new ArrayList<>();
+//
+//            for (Map<String, Object> data : yamlData) {
+//                Monster monster = new Monster();
+//                monster.setName((String) data.get("name"));
+//                monster.setDescription((String) data.get("description"));
+//                monster.setDangerLevel((Integer) data.get("dangerLevel"));
+//                monster.setHabitat((String) data.get("habitat"));
+//                monster.setFirstMention((String) data.get("firstMention"));
+//                monster.setImmunities((String) data.get("immunities"));
+//                monster.setHeight((Integer) data.get("height"));
+//                monster.setWeight((Integer) data.get("weight"));
+//                monster.setRecipe((String) data.get("recipe"));
+//                monster.setTime((String) data.get("time"));
+//                monster.setEfficiency((String) data.get("efficiency"));
+//                monsters.add(monster);
+//            }
+//
+//            // Сохраняем в хранилище
+//            MonsterStorage storage = MonsterStorage.getInstance();
+//            storage.addMonsters("yaml", monsters);
+//
+//        } catch (FileNotFoundException e) {
+//            System.err.println("YAML parsing error: " + e.getMessage());
+//        }
+//    }
+
     @Override
     protected void parse(String fileName) {
-        try {
-            List<Monster> monsters = mapper.readValue(
-                new File(fileName),
-                mapper.getTypeFactory().constructCollectionType(List.class, Monster.class)
-            );
-            System.out.println("Successfully parsed YAML: " + monsters.size() + " monsters");
-        } catch (IOException e) {
-            System.out.println("Error parsing YAML: " + e.getMessage());
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
