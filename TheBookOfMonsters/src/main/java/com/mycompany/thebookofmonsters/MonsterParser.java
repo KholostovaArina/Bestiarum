@@ -44,15 +44,23 @@ public class MonsterParser {
             Matcher imm = Pattern.compile("Иммунитет(?:ы)?: (.+?)\\.").matcher(bodyBlock);
             if (imm.find()) m.setImmunities(imm.group(1).trim());
 
-            Matcher size = Pattern.compile("Рост: (.+?), вес: (.+?)\\.").matcher(bodyBlock);
+            Matcher size = Pattern.compile("(?i)рост[:]?\\s*(\\S.*?)(?:,|;|\\.)?\\s*вес[:]?\\s*(\\S.*?)(\\.|$)", Pattern.UNICODE_CASE).matcher(bodyBlock);
             if (size.find()) {
                 m.setHeight(size.group(1).trim());
                 m.setWeight(size.group(2).trim());
             } else {
-                Matcher weightOnly = Pattern.compile("Вес (.+?)\\.").matcher(bodyBlock);
-                if (weightOnly.find()) m.setWeight(weightOnly.group(1).trim());
+                Matcher heightOnly = Pattern.compile("(?i)рост[:]?\\s*(\\S.*?)(\\.|$)", Pattern.UNICODE_CASE).matcher(bodyBlock);
+                if (heightOnly.find()) {
+                    m.setHeight(heightOnly.group(1).trim());
+                }
+
+                Matcher weightOnly = Pattern.compile("(?i)вес[:]?\\s*(\\S.*?)(\\.|$)", Pattern.UNICODE_CASE).matcher(bodyBlock);
+                if (weightOnly.find()) {
+                    m.setWeight(weightOnly.group(1).trim());
+                }
             }
 
+    
             Matcher act = Pattern.compile("Актив[еннао]+ (.+?)\\.").matcher(bodyBlock);
             if (act.find()) m.setActivity(act.group(1).trim());
 

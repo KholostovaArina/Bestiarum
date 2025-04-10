@@ -1,66 +1,62 @@
 package com.mycompany.thebookofmonsters;
 
-import javax.swing.*;
-import java.io.IOException;
+import java.io.File;
 import java.util.List;
+import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 public class Controller {
-//    private static final MonsterStorage storage = new MonsterStorage();
-//    private static Parser parserChain;
-//
-//    public static void initialize() {
-//        JsonParser jsonParser = new JsonParser();
-//        XmlParser xmlParser = new XmlParser();
-//        YamlParser yamlParser = new YamlParser();
-//        
-//        jsonParser.setNext(xmlParser);
-//        xmlParser.setNext(yamlParser);
-//        parserChain = jsonParser;
-//    }
-//
-//    public static void importFiles() {
-//        try {
-//            String path = View.chooseTxtFile();
-//            if (path != null) {
-//                TxtConverter.convertFile(path);
-//                storage.clear();
-//                parserChain.handle("output.json");
-//                parserChain.handle("output.xml");
-//                parserChain.handle("output.yaml");
-//                View.buildTree(storage); // Исправленный метод
-//                JOptionPane.showMessageDialog(null, "Импорт завершён успешно!");
-//            }
-//        } catch (IOException e) {
-//            showError("Ошибка импорта", e);
-//        }
-//    }
-//
-//    public static void exportFiles() {
-//        try {
-//            if (storage.getAllMonsters().isEmpty()) {
-//                JOptionPane.showMessageDialog(null, "Нет данных для экспорта");
-//                return;
-//            }
-//            
-//            // Исправленный экспорт
-//            List<Monster> monsters = storage.getAllMonsters();
-//            FileExporter.exportToJson(monsters, "export.json");
-//            FileExporter.exportToXml(monsters, "export.xml");
-//            FileExporter.exportToYaml(monsters, "export.yaml");
-//            
-//            JOptionPane.showMessageDialog(null, "Экспорт завершён успешно!");
-//        } catch (IOException e) {
-//            showError("Ошибка экспорта", e);
-//        }
-//    }
-//
-//    private static void showError(String title, Exception e) {
-//        JOptionPane.showMessageDialog(null, 
-//            title + ": " + e.getMessage(),
-//            "Ошибка", JOptionPane.ERROR_MESSAGE);
-//    }
-//
-//    public static MonsterStorage getStorage() {
-//        return storage;
-//    }
+    private String input;
+    private final String output = "src/main/resources/monsters";
+
+    private static final MonsterStorage storage = new MonsterStorage();
+
+    
+    public void run(){
+        input = chooseTxtFile();
+        convert();
+        View.createAndShowGUI();
+        setTree();
+    }
+    
+    public static String chooseTxtFile() {
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            return fc.getSelectedFile().getAbsolutePath();
+        }
+        return null;
+    }
+    
+    public void convert() {
+        XmlConverterFromTXT.convert(input, output + ".xml", storage);
+        YamlConverterFromTXT.convert(input, output + ".yaml", storage);
+        JsonConverterFromTXT.convert(input, output + ".json", storage);
+    }
+    
+    
+    public static void setTree() {
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) View.tree.getModel().getRoot();
+        root.removeAllChildren(); // Очищаем дерево перед заполнением
+
+        // Получаем Map<String, List<Monster>> из storage
+        for (String format : storage.getAllFormats().keySet()) {
+            // Создаем узел для каждого формата (ключа)
+            DefaultMutableTreeNode formatNode = new DefaultMutableTreeNode(format);
+            root.add(formatNode);
+
+            // Добавляем монстров как дочерние узлы для каждого формата
+            List<Monster> monsters = storage.getMonstersByFormat(format);
+            if (monsters != null) {
+                for (Monster monster : monsters) {
+                    DefaultMutableTreeNode monsterNode = new DefaultMutableTreeNode(monster.getName());
+                    formatNode.add(monsterNode);
+                }
+            }
+        }
+
+        // Обновляем модель дерева
+        ((DefaultTreeModel) View.tree.getModel()).reload();
+    }
 }
