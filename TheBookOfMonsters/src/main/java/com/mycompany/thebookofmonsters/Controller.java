@@ -12,14 +12,13 @@ public class Controller {
 
     private static final MonsterStorage storage = new MonsterStorage();
 
-    
-    public void run(){
+    public void run() {
         input = chooseTxtFile();
         convert();
         View.createAndShowGUI();
         setTree();
     }
-    
+
     public static String chooseTxtFile() {
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
@@ -28,14 +27,13 @@ public class Controller {
         }
         return null;
     }
-    
+
     public void convert() {
         XmlConverterFromTXT.convert(input, output + ".xml", storage);
         YamlConverterFromTXT.convert(input, output + ".yaml", storage);
         JsonConverterFromTXT.convert(input, output + ".json", storage);
     }
-    
-    
+
     public static void setTree() {
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) View.tree.getModel().getRoot();
         root.removeAllChildren(); // Очищаем дерево перед заполнением
@@ -58,5 +56,10 @@ public class Controller {
 
         // Обновляем модель дерева
         ((DefaultTreeModel) View.tree.getModel()).reload();
+    }
+
+    // Добавляем геттер для доступа к storage
+    public static MonsterStorage getStorage() {
+        return storage;
     }
 }
