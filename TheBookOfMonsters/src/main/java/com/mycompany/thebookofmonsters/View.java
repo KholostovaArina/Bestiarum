@@ -7,6 +7,8 @@ import java.awt.*;
 
 public class View {
     public static JTree tree;
+    public static Color bezheviy = new Color(220, 210, 200);
+    
     public static void createAndShowGUI() {
         JFrame frame = new JFrame("Книга чудовищ");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -20,7 +22,7 @@ public class View {
 
         JPanel panel = new JPanel(new BorderLayout());
 
-        JPanel treePanel = new JPanel(){
+        JPanel treePanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -35,7 +37,7 @@ public class View {
         treeScrollPane.setOpaque(false);
         treeScrollPane.setPreferredSize(new Dimension(250, frame.getHeight())); // Ширина 200 пикселей (примерно треть от 600)
 
-        JPanel infoPanel = new JPanel(){
+        JPanel infoPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -44,16 +46,60 @@ public class View {
                 }
             }
         };
-       
+
         panel.add(treeScrollPane, BorderLayout.WEST);
         panel.add(infoPanel, BorderLayout.CENTER);
 
         JPanel btnPanel = new JPanel();
         btnPanel.setBackground(new Color(80, 40, 0));
-        importBtn.setBackground(new Color(220,210,200));
-        exportBtn.setBackground(new Color(220,210,200));
+        importBtn.setBackground(bezheviy);
+        exportBtn.setBackground(bezheviy);
         btnPanel.add(importBtn);
         btnPanel.add(exportBtn);
+        exportBtn.addActionListener(e -> {
+            DefaultMutableTreeNode root = (DefaultMutableTreeNode) tree.getModel().getRoot();
+
+            JDialog exportDialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(exportBtn),
+                    "Выбор формата для экспорта", true);
+            exportDialog.setLayout(new BorderLayout());
+            exportDialog.setSize(300, 200);
+
+            JPanel formatsPanel = new JPanel();
+            formatsPanel.setLayout(new BoxLayout(formatsPanel, BoxLayout.Y_AXIS));
+            JScrollPane scrollPane = new JScrollPane(formatsPanel);
+
+            // Добавляем только узлы-форматы (детей корневого узла)
+            for (int i = 0; i < root.getChildCount(); i++) {
+                DefaultMutableTreeNode formatNode = (DefaultMutableTreeNode) root.getChildAt(i);
+                JButton formatButton = new JButton(formatNode.toString());
+                formatButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+                formatButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, formatButton.getPreferredSize().height));
+
+                formatButton.addActionListener(ev -> {
+                    //TODO Здесь будет логика экспорта выбранного формата
+                    JOptionPane.showMessageDialog(exportDialog,
+                            "Экспорт формата: " + formatNode.toString(),
+                            "Экспорт", JOptionPane.INFORMATION_MESSAGE);
+                    exportDialog.dispose();
+                });
+
+                formatsPanel.add(formatButton);
+            }
+
+            // Кнопка отмены
+            JButton cancelButton = new JButton("Отмена");
+            cancelButton.addActionListener(ev -> exportDialog.dispose());
+
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.add(cancelButton);
+
+            exportDialog.add(scrollPane, BorderLayout.CENTER);
+            exportDialog.add(buttonPanel, BorderLayout.SOUTH);
+            exportDialog.setLocationRelativeTo(exportBtn);
+            Design.setFontForAllComponents(exportDialog);
+            buttonPanel.setForeground(bezheviy);
+            exportDialog.setVisible(true);
+        });
 
         frame.add(panel, BorderLayout.CENTER);
         frame.add(btnPanel, BorderLayout.SOUTH);
@@ -93,4 +139,5 @@ public class View {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+    // Вспомогательный метод для добавления узлов в диалог
 }
