@@ -11,7 +11,7 @@ public class Design {
     static {
         try (InputStream fontStream = Design.class.getResourceAsStream("/BigFont.ttf")) {
             bigFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
-            bigFont = bigFont.deriveFont(22f);
+            bigFont = bigFont.deriveFont(24f);
         } catch (IOException | FontFormatException e) {
             bigFont = new Font("Serif", Font.PLAIN, 22);
         }
@@ -54,16 +54,15 @@ public class Design {
         return photoImage;
     }
 
-    public static void setFontForAllComponents(Container container, Color color) {
+    public static void setFontForAllComponents(Container container) {
         for (Component component : container.getComponents()) {
             component.setFont(font);
-            if (color != null) {
-                component.setForeground(color);
-            }
+            component.setForeground( new Color(80, 40, 0));
+            
             // Используем старый синтаксис для instanceof
             if (component instanceof Container) {
                 Container container1 = (Container) component;
-                setFontForAllComponents(container1, color);
+                setFontForAllComponents(container1);
             }
         }
     }

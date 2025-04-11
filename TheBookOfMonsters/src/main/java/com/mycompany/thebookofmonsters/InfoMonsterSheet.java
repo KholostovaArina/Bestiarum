@@ -13,15 +13,14 @@ public class InfoMonsterSheet {
 
         // 1. Имя (в верхней части с отступом)
         JLabel nameLabel = new JLabel(monster.getName(), SwingConstants.CENTER);
-        panel.add(nameLabel, BorderLayout.NORTH);
-        panel.setBorder(BorderFactory.createEmptyBorder(35, 30, 30, 30));
+        panel.setBorder(BorderFactory.createEmptyBorder(35, 35, 35, 55));
 
         // 2. Создаем панель для фото, описания и параметров
         JPanel contentPanel = new JPanel(new GridBagLayout());
         contentPanel.setOpaque(false);
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Поля вокруг компонентов
+        gbc.insets = new Insets(5, 5, 5, 5); // Уменьшенные поля вокруг компонентов
 
         // 3. Фото монстра
         JLabel photoLabel = new JLabel();
@@ -62,18 +61,35 @@ public class InfoMonsterSheet {
 
         Object[] parameterValues = {
             monster.getDangerLevel(), monster.getHabitat(), monster.getFirstMention(),
-            monster.getImmunities(), monster.getActivity(), monster.getHeight(),
-            monster.getWeight(), monster.getRecipe(), monster.getTime() + " мин",
-            monster.getEfficiency(), monster.getVulnerability()
+            monster.getImmunities(), monster.getActivity(), monster.getHeight(),monster.getWeight(), 
+            monster.getRecipe(),
+            monster.getTime() + " мин", monster.getEfficiency(), monster.getVulnerability()
         };
 
         JPanel parametersPanel = new JPanel(new GridLayout(0, 1)); // Одна колонка
         parametersPanel.setOpaque(false); // Прозрачный фон
 
         for (int i = 0; i < parameterNames.length; i++) {
-            JLabel label = new JLabel(parameterNames[i] + ": " + parameterValues[i]);
-            parametersPanel.add(label);
+            if (i == 7) {
+                String[] recipe = monster.getRecipe().split(",");
+                for (int j = 0; j < recipe.length; j++) { // Здесь исправлено: увеличивается j, а не i
+                    JLabel label = new JLabel();
+                    if (j == 0) {
+                        label.setText(parameterNames[i] + ": " + recipe[j]);
+                    } else {
+                        label.setText(recipe[j]);
+                    }
+                    parametersPanel.add(label);
+                }
+            } else {
+                JLabel label = new JLabel(parameterNames[i] + ": " + parameterValues[i]);
+                parametersPanel.add(label);
+            }
         }
+        parametersPanel.add(new JLabel(""));
+        parametersPanel.add(new JLabel(""));
+        parametersPanel.add(new JLabel(""));
+
 
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -84,14 +100,17 @@ public class InfoMonsterSheet {
         contentPanel.add(parametersPanel, gbc);
 
         // Добавляем панель с содержимым в основную панель
+        panel.add(nameLabel, BorderLayout.NORTH);
         panel.add(contentPanel, BorderLayout.CENTER);
 
         // Применяем шрифты и цвет текста ко всем компонентам
-        Design.setFontForAllComponents(panel, new Color(80, 40, 0));
+        Design.setFontForAllComponents(panel);
         nameLabel.setFont(Design.getBigFont());
 
         // Обновляем панель
         panel.revalidate();
         panel.repaint();
     }
+
+
 }

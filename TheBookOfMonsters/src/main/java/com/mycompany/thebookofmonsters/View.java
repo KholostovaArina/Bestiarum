@@ -1,18 +1,16 @@
 package com.mycompany.thebookofmonsters;
 
 import javax.swing.*;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
+import javax.swing.event.*;
 import javax.swing.tree.*;
 import java.awt.*;
 
 public class View {
     public static JTree tree;
-
     public static void createAndShowGUI() {
         JFrame frame = new JFrame("Книга чудовищ");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 600);
+        frame.setSize(650, 600);
 
         tree = new JTree(new DefaultMutableTreeNode("Чудовища"));
         tree.setOpaque(false);
@@ -33,8 +31,9 @@ public class View {
         };
         treePanel.add(tree);
         JScrollPane treeScrollPane = new JScrollPane(treePanel);
+        treePanel.setBorder(BorderFactory.createEmptyBorder(35, 20, 20, 20));
         treeScrollPane.setOpaque(false);
-        treeScrollPane.setPreferredSize(new Dimension(200, frame.getHeight())); // Ширина 200 пикселей (примерно треть от 600)
+        treeScrollPane.setPreferredSize(new Dimension(250, frame.getHeight())); // Ширина 200 пикселей (примерно треть от 600)
 
         JPanel infoPanel = new JPanel(){
             @Override
@@ -44,14 +43,13 @@ public class View {
                     g.drawImage(Design.getBookImage(), 0, 0, getWidth(), getHeight(), this);
                 }
             }
-        };;
-        
-        // Добавляем компоненты в панель
+        };
+       
         panel.add(treeScrollPane, BorderLayout.WEST);
         panel.add(infoPanel, BorderLayout.CENTER);
 
         JPanel btnPanel = new JPanel();
-        btnPanel.setBackground(new Color(220,210,200));
+        btnPanel.setBackground(new Color(80, 40, 0));
         importBtn.setBackground(new Color(220,210,200));
         exportBtn.setBackground(new Color(220,210,200));
         btnPanel.add(importBtn);
@@ -70,7 +68,7 @@ public class View {
                 // Проверяем, является ли узел листом (монстром) и не корневым узлом
                 if (selectedNode.isLeaf() && selectedNode.getParent() != null && !selectedNode.getParent().toString().equals("Чудовища")) {
                     String monsterName = selectedNode.toString();
-                    String format = selectedNode.getParent().toString(); // Формат (xml, yaml, json)
+                    String format = selectedNode.getParent().toString();
 
                     // Получаем список монстров для данного формата из Controller.storage
                     java.util.List<Monster> monsters = Controller.getStorage().getMonstersByFormat(format);
@@ -90,8 +88,9 @@ public class View {
                 }
             }
         });
-        Design.setFontForAllComponents(frame, new Color(80, 40, 0));
+        Design.setFontForAllComponents(frame);
         
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }
