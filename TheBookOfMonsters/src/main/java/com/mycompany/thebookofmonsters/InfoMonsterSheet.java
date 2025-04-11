@@ -13,7 +13,7 @@ public class InfoMonsterSheet {
 
         // 1. Имя (в верхней части с отступом)
         JLabel nameLabel = new JLabel(monster.getName(), SwingConstants.CENTER);
-        panel.setBorder(BorderFactory.createEmptyBorder(35, 35, 35, 55));
+        panel.setBorder(BorderFactory.createEmptyBorder(35, 40, 35, 55));
 
         // 2. Создаем панель для фото, описания и параметров
         JPanel contentPanel = new JPanel(new GridBagLayout());
@@ -35,7 +35,7 @@ public class InfoMonsterSheet {
         contentPanel.add(photoLabel, gbc);
 
         // 4. Описание справа от фото
-        JTextArea descriptionArea = new JTextArea(monster.getDescription());
+        JTextArea descriptionArea = new JTextArea("\n\n"+monster.getDescription());
         descriptionArea.setEditable(false);
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
