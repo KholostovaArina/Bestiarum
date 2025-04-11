@@ -3,7 +3,7 @@
     <monster>
         <id>1</id>
         <name>Леший</name>
-        <description>Гибрид человека и лесного духа, охраняющий древние рощи.</description>
+        <description>Xemel</description>
         <dangerLevel>7</dangerLevel>
         <habitat>в чащах Брокилона и Эдингеля</habitat>
         <firstMention>1234-06-21</firstMention>

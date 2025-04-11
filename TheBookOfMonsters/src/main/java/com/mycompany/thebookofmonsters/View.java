@@ -6,9 +6,10 @@ import javax.swing.tree.*;
 import java.awt.*;
 
 public class View {
+
     public static JTree tree;
     public static Color bezheviy = new Color(220, 210, 200);
-    
+
     public static void createAndShowGUI() {
         JFrame frame = new JFrame("Книга чудовищ");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,7 +69,6 @@ public class View {
             formatsPanel.setLayout(new BoxLayout(formatsPanel, BoxLayout.Y_AXIS));
             JScrollPane scrollPane = new JScrollPane(formatsPanel);
 
-            // Добавляем только узлы-форматы (детей корневого узла)
             for (int i = 0; i < root.getChildCount(); i++) {
                 DefaultMutableTreeNode formatNode = (DefaultMutableTreeNode) root.getChildAt(i);
                 JButton formatButton = new JButton(formatNode.toString());
@@ -76,28 +76,32 @@ public class View {
                 formatButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, formatButton.getPreferredSize().height));
 
                 formatButton.addActionListener(ev -> {
-                    //TODO Здесь будет логика экспорта выбранного формата
-                    JOptionPane.showMessageDialog(exportDialog,
-                            "Экспорт формата: " + formatNode.toString(),
-                            "Экспорт", JOptionPane.INFORMATION_MESSAGE);
+                    try {
+                        FileExporter.exportFormat(formatNode.toString(), Controller.getStorage());
+                        JOptionPane.showMessageDialog(exportDialog,
+                                "Данные успешно экспортированы в формате " + formatNode.toString(),
+                                "Экспорт завершен", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(exportDialog,
+                                "Ошибка при экспорте: " + ex.getMessage(),
+                                "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    }
                     exportDialog.dispose();
                 });
 
                 formatsPanel.add(formatButton);
             }
 
-            // Кнопка отмены
             JButton cancelButton = new JButton("Отмена");
             cancelButton.addActionListener(ev -> exportDialog.dispose());
 
-            JPanel buttonPanel = new JPanel();
+            JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
             buttonPanel.add(cancelButton);
 
             exportDialog.add(scrollPane, BorderLayout.CENTER);
             exportDialog.add(buttonPanel, BorderLayout.SOUTH);
             exportDialog.setLocationRelativeTo(exportBtn);
             Design.setFontForAllComponents(exportDialog);
-            buttonPanel.setForeground(bezheviy);
             exportDialog.setVisible(true);
         });
 
