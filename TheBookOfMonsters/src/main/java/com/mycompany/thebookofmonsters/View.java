@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class View {
     public static JTree tree;
-    public static JTextArea infoArea;
 
     public static void createAndShowGUI() {
         JFrame frame = new JFrame("Книга чудовищ");
@@ -17,10 +16,8 @@ public class View {
 
         // Инициализация компонентов
         tree = new JTree(new DefaultMutableTreeNode("Чудовища"));
-        infoArea = new JTextArea();
-        infoArea.setEditable(false);
-        infoArea.setLineWrap(true); // Включаем перенос строк
-        infoArea.setWrapStyleWord(true); // Перенос по словам
+        tree.setOpaque(false);
+
 
         JButton importBtn = new JButton("Импорт");
         JButton exportBtn = new JButton("Экспорт");
@@ -28,15 +25,38 @@ public class View {
         // Компоновка интерфейса
         JPanel panel = new JPanel(new BorderLayout());
 
-        // Создаем JScrollPane для JTree и задаем предпочтительный размер
-        JScrollPane treeScrollPane = new JScrollPane(tree);
+        JPanel treePanel = new JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (Design.getBookImage() != null) {
+                    g.drawImage(Design.getBookImage(), 0, 0, getWidth(), getHeight(), this);
+                }
+            }
+        };
+        treePanel.add(tree);
+        JScrollPane treeScrollPane = new JScrollPane(treePanel);
+        treeScrollPane.setOpaque(false);
         treeScrollPane.setPreferredSize(new Dimension(200, frame.getHeight())); // Ширина 200 пикселей (примерно треть от 600)
 
+        JPanel infoPanel = new JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (Design.getBookImage() != null) {
+                    g.drawImage(Design.getBookImage(), 0, 0, getWidth(), getHeight(), this);
+                }
+            }
+        };;
+        
         // Добавляем компоненты в панель
         panel.add(treeScrollPane, BorderLayout.WEST);
-        panel.add(new JScrollPane(infoArea), BorderLayout.CENTER);
+        panel.add(infoPanel, BorderLayout.CENTER);
 
         JPanel btnPanel = new JPanel();
+        btnPanel.setBackground(new Color(220,210,200));
+        importBtn.setBackground(new Color(220,210,200));
+        exportBtn.setBackground(new Color(220,210,200));
         btnPanel.add(importBtn);
         btnPanel.add(exportBtn);
 
@@ -58,38 +78,25 @@ public class View {
                     // Получаем список монстров для данного формата из Controller.storage
                     java.util.List<Monster> monsters = Controller.getStorage().getMonstersByFormat(format);
                     if (monsters != null) {
-                        // Ищем монстра по имени
+                         // Ищем монстра по имени
                         for (Monster monster : monsters) {
-                            if (monster.getName().equals(monsterName)) {
-                                // Формируем строку с характеристиками монстра
-                                StringBuilder details = new StringBuilder();
-                                details.append("Имя: ").append(monster.getName()).append("\n");
-                                details.append("Описание: ").append(monster.getDescription()).append("\n");
-                                details.append("Уровень опасности: ").append(monster.getDangerLevel()).append("\n");
-                                details.append("Место обитания: ").append(monster.getHabitat()).append("\n");
-                                details.append("Первое упоминание: ").append(monster.getFirstMention()).append("\n");
-                                details.append("Иммунитеты: ").append(monster.getImmunities()).append("\n");
-                                details.append("Активность: ").append(monster.getActivity()).append("\n");
-                                details.append("Рост: ").append(monster.getHeight()).append("\n");
-                                details.append("Вес: ").append(monster.getWeight()).append("\n");
-                                details.append("Рецепт: ").append(monster.getRecipe()).append("\n");
-                                details.append("Время приготовления: ").append(monster.getTime()).append(" мин\n");
-                                details.append("Эффективность: ").append(monster.getEfficiency()).append("\n");
-                                details.append("Уязвимость: ").append(monster.getVulnerability()).append("\n");
-
-                                // Обновляем содержимое infoArea
-                                infoArea.setText(details.toString());
+                            if (monster.getName().equals(monsterName)) {                            
+                                InfoMonsterSheet.showInfo(monster, infoPanel);
                                 break;
                             }
                         }
                     }
                 } else {
-                    // Если выбран не монстр (например, формат или корень), очищаем infoArea
-                    infoArea.setText("");
+                    infoPanel.removeAll();
+                    infoPanel.revalidate();
+                    infoPanel.repaint();
                 }
             }
         });
 
+        // Применяем шрифты и цвет текста ко всем компонентам (включая кнопки)
+        Design.setFontForAllComponents(frame, new Color(100, 60, 0));
+        
         frame.setVisible(true);
     }
 }
