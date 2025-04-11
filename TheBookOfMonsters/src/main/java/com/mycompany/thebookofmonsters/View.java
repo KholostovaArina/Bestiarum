@@ -14,15 +14,12 @@ public class View {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 600);
 
-        // Инициализация компонентов
         tree = new JTree(new DefaultMutableTreeNode("Чудовища"));
         tree.setOpaque(false);
-
 
         JButton importBtn = new JButton("Импорт");
         JButton exportBtn = new JButton("Экспорт");
 
-        // Компоновка интерфейса
         JPanel panel = new JPanel(new BorderLayout());
 
         JPanel treePanel = new JPanel(){
@@ -93,9 +90,7 @@ public class View {
                 }
             }
         });
-
-        // Применяем шрифты и цвет текста ко всем компонентам (включая кнопки)
-        Design.setFontForAllComponents(frame, new Color(100, 60, 0));
+        Design.setFontForAllComponents(frame, new Color(80, 40, 0));
         
         frame.setVisible(true);
     }

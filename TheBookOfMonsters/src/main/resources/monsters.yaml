@@ -20,7 +20,7 @@
   efficiency: высокая
   firstMention: '1198-07-15'
   habitat: на полях Редании и в амбарах Туссента
-  height: null
+  height: '-'
   id: 2
   immunities: кровотечение
   name: Полуденница
@@ -41,7 +41,7 @@
   name: Катакан
   recipe: жало мантикоры (4), нефритовая пыль (2), спирт Альберихта
   time: 90
-  vulnerability: null
+  vulnerability: '-'
   weight: 200 кг
 - !!com.mycompany.thebookofmonsters.Monster
   activity: ночью
@@ -71,5 +71,5 @@
   name: Элементаль льда
   recipe: сердце огненного элементаля (1), сера (3), расплавленное железо
   time: 120
-  vulnerability: null
+  vulnerability: '-'
   weight: не измерим

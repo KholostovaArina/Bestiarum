@@ -22,7 +22,8 @@ public class Monster {
     private String vulnerability;
 
     public String getVulnerability() {
-        return vulnerability;
+         if (vulnerability!=null){ return vulnerability ;}
+        else{ return "-";}
     }
 
     public void setVulnerability(String vulnerability) {
@@ -76,10 +77,16 @@ public class Monster {
     public String getActivity() {return activity;}
     public void setActivity(String activity) {this.activity = activity;}
 
-    public String getHeight() {return height;}
+    public String getHeight(){
+        if (height!=null){ return height ;}
+        else{ return "-";}
+    }
     public void setHeight(String height) {this.height = height;}
 
-    public String getWeight() { return weight;}
+    public String getWeight() { 
+        if (weight!=null){return weight ;}
+        else{ return "-";}
+    }
     public void setWeight(String weight) {this.weight = weight;}
 
     public String getRecipe() {return recipe;}

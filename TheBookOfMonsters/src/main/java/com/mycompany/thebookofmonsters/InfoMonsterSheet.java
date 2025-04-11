@@ -14,7 +14,8 @@ public class InfoMonsterSheet {
         // 1. Имя (в верхней части с отступом)
         JLabel nameLabel = new JLabel(monster.getName(), SwingConstants.CENTER);
         panel.add(nameLabel, BorderLayout.NORTH);
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 25, 25, 30));
+        panel.setBorder(BorderFactory.createEmptyBorder(35, 30, 30, 30));
+
         // 2. Создаем панель для фото, описания и параметров
         JPanel contentPanel = new JPanel(new GridBagLayout());
         contentPanel.setOpaque(false);
@@ -22,7 +23,7 @@ public class InfoMonsterSheet {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10); // Поля вокруг компонентов
 
-        // 3. Фото монстра 
+        // 3. Фото монстра
         JLabel photoLabel = new JLabel();
         if (Design.getPhotoImage() != null) {
             Image scaledPhoto = Design.getPhotoImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
@@ -39,10 +40,11 @@ public class InfoMonsterSheet {
         descriptionArea.setEditable(false);
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
+        descriptionArea.setOpaque(false); // Прозрачный фон
 
         JScrollPane descriptionScrollPane = new JScrollPane(descriptionArea);
-        descriptionScrollPane.setOpaque(false);
-        descriptionScrollPane.getViewport().setOpaque(false);
+        descriptionScrollPane.setOpaque(false); // Делаем JScrollPane прозрачным
+        descriptionScrollPane.getViewport().setOpaque(false); // Делаем Viewport прозрачным
         descriptionScrollPane.setBorder(BorderFactory.createEmptyBorder()); // Убираем границы
 
         gbc.gridx = 1;
@@ -85,8 +87,9 @@ public class InfoMonsterSheet {
         panel.add(contentPanel, BorderLayout.CENTER);
 
         // Применяем шрифты и цвет текста ко всем компонентам
-        Design.setFontForAllComponents(panel, new Color(100, 60, 0));
-        nameLabel.setFont(Design.getBigFont()); 
+        Design.setFontForAllComponents(panel, new Color(80, 40, 0));
+        nameLabel.setFont(Design.getBigFont());
+
         // Обновляем панель
         panel.revalidate();
         panel.repaint();
