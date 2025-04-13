@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class FileExporter {
 
@@ -23,23 +24,25 @@ public class FileExporter {
             String filePath = "src/main/resources/" + fileName;
 
             switch (formatName.toLowerCase()) {
-                case "json":
-                    exportToJson(monsters, filePath);
-                    break;
-                case "xml":
-                    exportToXml(monsters, filePath);
-                    break;
-                case "yaml":
-                    exportToYaml(monsters, filePath);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Неподдерживаемый формат: " + formatName);
+                case "json" -> exportToJson(monsters, filePath);
+                case "xml" -> exportToXml(monsters, filePath);
+                case "yaml" -> exportToYaml(monsters, filePath);
+                default -> throw new IllegalArgumentException("Неподдерживаемый формат: " + formatName);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (JAXBException | IOException | IllegalArgumentException e) {}
     }
 
+    public static void exportAllFormats(MonsterStorage storage) {
+        Map<String, List<Monster>> allFormats = storage.getAllFormats();
+        if (allFormats == null || allFormats.isEmpty()) {
+            System.err.println("Нет данных для экспорта");
+            return;
+        }
+
+        for (String formatName : allFormats.keySet()) {
+            exportFormat(formatName, storage);
+        }
+    }
 
     private static void exportToJson(List<Monster> monsters, String filePath) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -51,10 +54,10 @@ public class FileExporter {
         JAXBContext context = JAXBContext.newInstance(MonstersXmlWrapper.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        
+
         MonstersXmlWrapper wrapper = new MonstersXmlWrapper();
         wrapper.setMonsters(monsters);
-        
+
         marshaller.marshal(wrapper, new File(filePath));
     }
 

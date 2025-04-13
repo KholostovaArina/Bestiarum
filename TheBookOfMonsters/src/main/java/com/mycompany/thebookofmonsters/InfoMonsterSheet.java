@@ -22,7 +22,7 @@ public class InfoMonsterSheet {
         panel.setOpaque(false);
 
         JLabel nameLabel = new JLabel(monster.getName(), SwingConstants.CENTER);
-        panel.setBorder(BorderFactory.createEmptyBorder(35, 40, 35, 55));
+        panel.setBorder(BorderFactory.createEmptyBorder(40, 55, 35, 35));
 
         JPanel contentPanel = new JPanel(new GridBagLayout());
         contentPanel.setOpaque(false);
@@ -51,14 +51,17 @@ public class InfoMonsterSheet {
 
         // Слушатель изменений описания
         descriptionArea.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
             public void changedUpdate(DocumentEvent e) {
                 updateDescription();
             }
 
+            @Override
             public void removeUpdate(DocumentEvent e) {
                 updateDescription();
             }
 
+            @Override
             public void insertUpdate(DocumentEvent e) {
                 updateDescription();
             }

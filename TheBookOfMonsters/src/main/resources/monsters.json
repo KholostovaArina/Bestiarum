@@ -1,7 +1,7 @@
 [ {
   "id" : 1,
   "name" : "Леший",
-  "description" : "Jeson.",
+  "description" : "Гибрид человека и лесного духа, охраняющий древние рощи.",
   "dangerLevel" : 7,
   "habitat" : "в чащах Брокилона и Эдингеля",
   "firstMention" : "1234-06-21",

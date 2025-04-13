@@ -2,26 +2,82 @@ package com.mycompany.thebookofmonsters;
 
 import java.io.File;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 public class Controller {
+
     private String input;
     private final String output = "src/main/resources/monsters";
+    private String fileName;
 
     private static final MonsterStorage storage = new MonsterStorage();
 
-    public void run() {
-        input = chooseTxtFile();
+    public void run() throws Exception {
+        input = chooseFile("txt");
         convert();
+
         View.createAndShowGUI();
         setTree();
+
+        View.importBtn.addActionListener(e -> {
+            fileName = chooseFile("yaml", "json", "xml", "yml");
+            if (fileName != null) {
+                try {
+                    parse(fileName);
+                    setTree();
+                } catch (Exception ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                // Обработка случая, когда пользователь отменил выбор файла
+                JOptionPane.showMessageDialog(null,
+                        "Файл не был выбран",
+                        "Информация",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        
     }
 
-    public static String chooseTxtFile() {
+    public static void parse(String fileName) throws Exception {
+        XmlParser xmlParser = new XmlParser(storage);
+        YamlParser yamlParser = new YamlParser(storage);
+        JsonParser jsonParser = new JsonParser(storage);
+        
+        xmlParser.setNext(yamlParser);
+        yamlParser.setNext(jsonParser);
+
+        xmlParser.parse(fileName);
+    }
+
+    public static String chooseFile(String... extensions) {
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+
+        // Создаем описание фильтра
+        StringBuilder description = new StringBuilder("Допустимые файлы (");
+        for (int i = 0; i < extensions.length; i++) {
+            if (i > 0) {
+                description.append(", ");
+            }
+            description.append("*.").append(extensions[i]);
+        }
+        description.append(")");
+
+        // Создаем и устанавливаем фильтр
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                description.toString(),
+                extensions
+        );
+        fc.setFileFilter(filter);
+
+        // Показываем диалог выбора файла
         if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             return fc.getSelectedFile().getAbsolutePath();
         }

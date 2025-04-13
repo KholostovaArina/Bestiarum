@@ -1,6 +1,5 @@
 package com.mycompany.thebookofmonsters;
 
-
 import jakarta.xml.bind.annotation.*;
 
 @XmlRootElement(name = "monster")
@@ -30,42 +29,19 @@ public class Monster {
         this.vulnerability = vulnerability;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() {return id;}
+    public void setId(int id) {this.id = id;}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public String getName() {return name;}
+    public void setName(String name) {this.name = name;}
 
-    public String getName() {
-        return name;
-    }
+    public String getDescription() {return description;}
+    public void setDescription(String description) {this.description = description;}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public int getDangerLevel() {return dangerLevel;}
+    public void setDangerLevel(int dangerLevel) {this.dangerLevel = dangerLevel;}
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getDangerLevel() {
-        return dangerLevel;
-    }
-
-    public void setDangerLevel(int dangerLevel) {
-        this.dangerLevel = dangerLevel;
-    }
-
-    public String getHabitat() {
-        return habitat;
-    }
-
+    public String getHabitat() {return habitat;}
     public void setHabitat(String habitat) {this.habitat = habitat;}
 
     public String getFirstMention() { return firstMention;}
@@ -97,5 +73,4 @@ public class Monster {
 
     public String getEfficiency() {return efficiency;}
     public void setEfficiency(String efficiency) {this.efficiency = efficiency;}
-    
 }
