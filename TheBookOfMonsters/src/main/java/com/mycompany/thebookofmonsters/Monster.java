@@ -5,6 +5,7 @@ import jakarta.xml.bind.annotation.*;
 @XmlRootElement(name = "monster")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Monster {
+    
     private int id;
     private String name;
     private String description;
@@ -19,6 +20,7 @@ public class Monster {
     private int time;
     private String efficiency;
     private String vulnerability;
+   
 
     public String getVulnerability() {
          if (vulnerability!=null){ return vulnerability ;}

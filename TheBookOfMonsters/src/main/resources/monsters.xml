@@ -77,4 +77,84 @@
         <time>120</time>
         <efficiency>переменная</efficiency>
     </monster>
+    <monster>
+        <id>6</id>
+        <name>Кибердедус</name>
+        <description>Призрак, облучённый во время аварии на Чернобыльской АЭС.</description>
+        <dangerLevel>5</dangerLevel>
+        <habitat>в тёмных коридорах Т корпуса</habitat>
+        <firstMention>2024-09-01</firstMention>
+        <immunities>диалоги, факты, общая система оценивания</immunities>
+        <activity>утром, особая активность во время зачётов</activity>
+        <height>170 см</height>
+        <weight>75 кг</weight>
+        <recipe>пепел лекций(5), эссенция оксида урана(1)</recipe>
+        <time>30</time>
+        <efficiency>средняя</efficiency>
+        <vulnerability>Неуязвим к реальным фактам.</vulnerability>
+    </monster>
+    <monster>
+        <id>7</id>
+        <name>Максимура</name>
+        <description>рр</description>
+        <dangerLevel>10</dangerLevel>
+        <habitat>неизвестно, часто обнаруживается в Б корпусе</habitat>
+        <firstMention>2025-01-17</firstMention>
+        <immunities>аргументы</immunities>
+        <activity>в любое время, когда кто-то пытается получить информацию</activity>
+        <height>170 см</height>
+        <weight>60 кг</weight>
+        <recipe>диаграмма классов большим шрифтом (7), листок самокритики, экстракт gpt(3)</recipe>
+        <time>100</time>
+        <efficiency>критическая</efficiency>
+        <vulnerability>Уязвим к онлайн парам.</vulnerability>
+    </monster>
+    <monster>
+        <id>8</id>
+        <name>Макаронатикус</name>
+        <description>Чёрт - проказник из мира сложных схем и чертежей</description>
+        <dangerLevel>4</dangerLevel>
+        <habitat>в ветреных пещерах Д корпуса</habitat>
+        <firstMention>2023-07-10</firstMention>
+        <immunities>новые технологии</immunities>
+        <activity>на первых парах зимой</activity>
+        <height>-</height>
+        <weight>неизвестно</weight>
+        <recipe>хорошая посещаемость (4), графитовая пыль (2), стипендия</recipe>
+        <time>90</time>
+        <efficiency>умеренная</efficiency>
+        <vulnerability>Уязвим к ГОСТам</vulnerability>
+    </monster>
+    <monster>
+        <id>9</id>
+        <name>Туманник</name>
+        <description>Неуловимый дух, навязывающий видения и иллюзии.</description>
+        <dangerLevel>4</dangerLevel>
+        <habitat>в туманных полях и болотах Старого Мира</habitat>
+        <firstMention>1401-10-30</firstMention>
+        <immunities>физические атаки</immunities>
+        <activity>в сумерках</activity>
+        <height>неосязаем</height>
+        <weight>не измерим</weight>
+        <recipe>багровая дымка (1), дух озера (2), зелье прозрения</recipe>
+        <time>60</time>
+        <efficiency>высокая</efficiency>
+        <vulnerability>Уязвим к ветру.</vulnerability>
+    </monster>
+    <monster>
+        <id>10</id>
+        <name>Пикси</name>
+        <description>Маленькие озорные духи леса, известные своими иллюзиями и розыгрышами.</description>
+        <dangerLevel>3</dangerLevel>
+        <habitat>в густых лесах и рощах с древними деревьями</habitat>
+        <firstMention>1123-05-07</firstMention>
+        <immunities>простая магия, физические атаки</immunities>
+        <activity>в сумерках и на рассвете</activity>
+        <height>20-30 см</height>
+        <weight>1-2 кг</weight>
+        <recipe>лепестки розы лаванды (3), волшебная пыльца (2), капли утренней росы</recipe>
+        <time>15</time>
+        <efficiency>умеренная</efficiency>
+        <vulnerability>Уязвимы к звону серебряных колокольчиков.</vulnerability>
+    </monster>
 </monsters>

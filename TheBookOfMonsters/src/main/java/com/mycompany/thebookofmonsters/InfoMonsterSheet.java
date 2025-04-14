@@ -6,16 +6,19 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class InfoMonsterSheet {
 
     private static Monster currentMonster;
-    public static void showInfo(Monster monster, JPanel panel) {
+    private static Image image ;
 
+    public static void showInfo(Monster monster, JPanel panel) throws IOException {
+        image = ImageIO.read(InfoMonsterSheet.class.getResourceAsStream("/фото.jpg"));
         currentMonster = monster;
-//        JPanel currentInfoPanel = panel;
 
         panel.removeAll();
         panel.setLayout(new BorderLayout());
@@ -30,12 +33,17 @@ public class InfoMonsterSheet {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
-        // Фото монстра (оставляем как было)
+        // Фото монстра
         JLabel photoLabel = new JLabel();
-        if (Design.getPhotoImage() != null) {
-            Image scaledPhoto = Design.getPhotoImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-            photoLabel.setIcon(new ImageIcon(scaledPhoto));
-        }
+        try {
+            Image monsterImage = ImageIO.read(InfoMonsterSheet.class.getResourceAsStream("/" + monster.getName() + ".jpg"));
+            if (monsterImage != null) {
+                image = monsterImage;
+            }
+        } catch (IOException e) {}
+        Image scaledPhoto = image.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+        photoLabel.setIcon(new ImageIcon(scaledPhoto));
+
         photoLabel.setHorizontalAlignment(SwingConstants.LEFT);
         gbc.gridx = 0;
         gbc.gridy = 0;

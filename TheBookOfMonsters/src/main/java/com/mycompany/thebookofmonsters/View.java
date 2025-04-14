@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.tree.*;
 import java.awt.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class View {
 
@@ -153,7 +156,11 @@ public class View {
                     // Ищем монстра по имени
                     for (Monster monster : monsters) {
                         if (monster.getName().equals(monsterName)) {
-                            InfoMonsterSheet.showInfo(monster, infoPanel);
+                            try {
+                                InfoMonsterSheet.showInfo(monster, infoPanel);
+                            } catch (IOException ex) {
+                                Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                             break;
                         }
                     }
