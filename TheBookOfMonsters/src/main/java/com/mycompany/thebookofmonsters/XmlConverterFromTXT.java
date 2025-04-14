@@ -22,11 +22,7 @@ public class XmlConverterFromTXT {
             try (Writer writer = Files.newBufferedWriter(Path.of(outputXmlPath))) {
                 marshaller.marshal(wrapper, writer);
             }
-
-            System.out.println("Успешно сконвертировано в XML: " + outputXmlPath);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка при конвертации в XML: " + e.getMessage());
+        } catch (JAXBException | IOException e) {
         }
     }
 }
