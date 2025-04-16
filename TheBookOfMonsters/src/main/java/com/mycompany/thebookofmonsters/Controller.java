@@ -12,44 +12,54 @@ import javax.swing.tree.DefaultTreeModel;
 public class Controller {
 
     private String input;
-    private final String output = "src/main/resources/monsters";
+//    private String output = "src/main/resources/monsters";
     private String fileName;
 
     private static final MonsterStorage storage = new MonsterStorage();
 
-    public void run() throws Exception {
+   public void run() throws Exception {
+    View.showPreview();
+
+    View.btnStart.addActionListener(e -> {
+        View.frameStart.dispose();
         input = chooseFile("txt");
-        convert();
-
-        View.createAndShowGUI();
-        setTree();
-
-        View.importBtn.addActionListener(e -> {
-            fileName = chooseFile("yaml", "json", "xml", "yml");
-            if (fileName != null) {
-                try {
-                    parse(fileName);
-                    setTree();
-                } catch (Exception ex) {
-                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                // Обработка случая, когда пользователь отменил выбор файла
-                JOptionPane.showMessageDialog(null,
-                        "Файл не был выбран",
-                        "Информация",
-                        JOptionPane.INFORMATION_MESSAGE);
+        if (input != null) {
+            try {
+                convert();
+                View.createAndShowGUI();                    
+                setTree();
+                
+                View.importBtn.addActionListener(importEvent -> {
+                    fileName = chooseFile("yaml", "json", "xml", "yml");
+                    if (fileName != null) {
+                        try {
+                            parse(fileName);
+                            setTree();
+                        } catch (Exception ex) {
+                            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                            "Файл не был выбран",
+                            "Информация",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    }
+                });
+                
+            } catch (Exception ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
-        });
-
-        
-    }
+        } else {
+            System.exit(0);
+        }
+    });
+}
 
     public static void parse(String fileName) throws Exception {
         XmlParser xmlParser = new XmlParser(storage);
         YamlParser yamlParser = new YamlParser(storage);
         JsonParser jsonParser = new JsonParser(storage);
-        
+
         xmlParser.setNext(yamlParser);
         yamlParser.setNext(jsonParser);
 
@@ -85,9 +95,9 @@ public class Controller {
     }
 
     public void convert() {
-        XmlConverterFromTXT.convert(input, output + ".xml", storage);
-        YamlConverterFromTXT.convert(input, output + ".yaml", storage);
-        JsonConverterFromTXT.convert(input, output + ".json", storage);
+        XmlConverterFromTXT.convert(input, storage);
+        YamlConverterFromTXT.convert(input, storage);
+        JsonConverterFromTXT.convert(input, storage);
     }
 
     public static void setTree() {

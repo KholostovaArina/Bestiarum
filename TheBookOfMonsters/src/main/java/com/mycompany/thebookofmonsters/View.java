@@ -12,10 +12,12 @@ public class View {
 
     public static JTree tree;
     public static Color bezheviy = new Color(220, 210, 200);
+    public static Color brown = new Color(103,79,60);
     public static JButton importBtn;
     public static JButton exportBtn;
     public static JButton exportAllBtn;
-    //public static JButton dopBtn;
+    public static JButton btnStart;
+    public static JFrame frameStart;
 
     public static void createAndShowGUI() {
         JFrame frame = new JFrame("Книга чудовищ");
@@ -28,8 +30,6 @@ public class View {
         importBtn = new JButton("Импорт");
         exportBtn = new JButton("Экспорт");
         exportAllBtn = new JButton("Экспорт всех форматов");
-        //dopBtn = new JButton("Добавить чудовищ");
-        
 
         JPanel panel = new JPanel(new BorderLayout());
 
@@ -62,13 +62,11 @@ public class View {
         panel.add(infoPanel, BorderLayout.CENTER);
 
         JPanel btnPanel = new JPanel();
-        btnPanel.setBackground(new Color(80, 40, 0));
+        btnPanel.setBackground(brown);
         importBtn.setBackground(bezheviy);
         exportBtn.setBackground(bezheviy);
-       // dopBtn.setBackground(bezheviy);
         exportAllBtn.setBackground(bezheviy);
         
-        //btnPanel.add(dopBtn);
         btnPanel.add(importBtn);
         btnPanel.add(exportBtn);
         btnPanel.add(exportAllBtn);
@@ -117,6 +115,8 @@ public class View {
                         JOptionPane.showMessageDialog(exportDialog,
                                 "Ошибка при экспорте: " + ex.getMessage(),
                                 "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    } catch (Exception ex) {
+                        Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     exportDialog.dispose();
                 });
@@ -172,8 +172,37 @@ public class View {
             }
         });
         Design.setFontForAllComponents(frame);
-        
+
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    public static void showPreview() {
+        frameStart = new JFrame("Привет пользователь!");
+        frameStart.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameStart.setSize(400, 300);
+
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(brown);
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(70, 30, 30, 30));
+
+        JTextArea text = new JTextArea("Выберите, пожалуйста, текстовый файл, из которого будут импортированы чудовища");
+        text.setLineWrap(true);
+        text.setWrapStyleWord(true);
+        text.setEditable(false);
+        text.setFont(Design.getFont().deriveFont(22f));
+        text.setOpaque(false);
+        text.setForeground(Color.WHITE);
+
+        btnStart = new JButton("OK");
+        btnStart.setBackground(bezheviy);
+        btnStart.setFont(Design.getBigFont());
+
+        mainPanel.add(text, BorderLayout.CENTER);
+        mainPanel.add(btnStart, BorderLayout.SOUTH);
+
+        frameStart.add(mainPanel);
+        frameStart.setLocationRelativeTo(null);
+        frameStart.setVisible(true);
     }
 }
