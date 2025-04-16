@@ -1,6 +1,7 @@
 package com.mycompany.thebookofmonsters;
 
 import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 import java.io.File;
 
@@ -29,7 +30,7 @@ public class XmlParser extends AbstractParser {
                 storage.addFormat(format, wrapper.getMonsters());
                 System.out.println("Successfully parsed JSON file: " + fileName);
             }
-        } catch (Exception e) {
+        } catch (JAXBException e) {
             System.err.println("Error parsing YAML file: " + e.getMessage());
         }
     }

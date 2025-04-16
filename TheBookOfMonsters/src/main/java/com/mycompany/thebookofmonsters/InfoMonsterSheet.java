@@ -41,7 +41,7 @@ public class InfoMonsterSheet {
                 image = monsterImage;
             }
         } catch (IOException e) {}
-        Image scaledPhoto = image.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+        Image scaledPhoto = image.getScaledInstance(120, 120, Image.SCALE_AREA_AVERAGING);
         photoLabel.setIcon(new ImageIcon(scaledPhoto));
 
         photoLabel.setHorizontalAlignment(SwingConstants.LEFT);

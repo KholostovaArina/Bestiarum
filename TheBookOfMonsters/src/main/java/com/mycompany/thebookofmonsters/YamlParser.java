@@ -20,13 +20,11 @@ public class YamlParser extends AbstractParser {
     public void parse(String fileName) {
         if (fileName.endsWith(".yaml") || fileName.endsWith(".yml")) {
             try (FileInputStream inputStream = new FileInputStream(new File(fileName))) {
-                // Создаем экземпляр Yaml и указываем тип данных для десериализации
+                
                 Yaml yaml = new Yaml(new Constructor(List.class));
                 
-                // Читаем данные из файла
                 List<Monster> monsters = yaml.load(inputStream);
                 
-                // Сохраняем данные в хранилище
                 storage.addFormat(format, monsters);
                 System.out.println("Successfully parsed YAML file: " + fileName);
             } catch (FileNotFoundException e) {

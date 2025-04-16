@@ -11,6 +11,7 @@ public class YamlConverterFromTXT {
 
     public static void convert(String inputTxtPath, String outputYamlPath, MonsterStorage storage) {
         try {
+            System.out.println(inputTxtPath+"YAML");
             List<Monster> monsters = MonsterParser.parseFromTextFile(inputTxtPath);
 
             storage.addFormat("yaml", monsters);

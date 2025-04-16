@@ -10,13 +10,18 @@ public class JsonConverterFromTXT {
 
     public static void convert(String inputTxtPath, String outputJsonPath, MonsterStorage storage) {
         try {
+            System.out.println(outputJsonPath+"JSON");
             List<Monster> monsters = MonsterParser.parseFromTextFile(inputTxtPath);
 
+            storage.addFormat("json", monsters);
+            
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
             mapper.writeValue(new File(outputJsonPath), monsters);
 
-            storage.addFormat("json", monsters);
-        } catch (IOException e) {}
+  
+        } catch (IOException e) {
+             e.printStackTrace();
+        }
     }
 }
