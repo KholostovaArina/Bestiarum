@@ -12,16 +12,15 @@ import javax.swing.tree.DefaultTreeModel;
 public class Controller {
 
     private String input;
-//    private String output = "src/main/resources/monsters";
     private String fileName;
 
     private static final MonsterStorage storage = new MonsterStorage();
 
    public void run() throws Exception {
-    View.showPreview();
+    WelcomeScreen.showPreview();
 
-    View.btnStart.addActionListener(e -> {
-        View.frameStart.dispose();
+    WelcomeScreen.btnStart.addActionListener(e -> {
+        WelcomeScreen.frameStart.dispose();
         input = chooseFile("txt");
         if (input != null) {
             try {
