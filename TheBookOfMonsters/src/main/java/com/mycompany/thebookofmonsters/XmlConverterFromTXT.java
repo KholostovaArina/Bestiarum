@@ -7,7 +7,6 @@ public class XmlConverterFromTXT {
 
     public static void convert(String inputTxtPath, MonsterStorage storage) {
         try {
-            System.out.println(inputTxtPath+"XML");
             List<Monster> monsters = MonsterParser.parseFromTextFile(inputTxtPath);
             storage.addFormat("xml", monsters);
         } catch (IOException e) {

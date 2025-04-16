@@ -76,9 +76,6 @@ public class View {
                     "Выбор формата для экспорта", true);
             try {
                 FileExporter.exportAllFormats(Controller.getStorage());
-                JOptionPane.showMessageDialog(exportDialog,
-                        "Все форматы успешно экспортированы",
-                        "Экспорт завершен", JOptionPane.INFORMATION_MESSAGE);
             } catch (HeadlessException ex) {
                 JOptionPane.showMessageDialog(exportDialog,
                         "Ошибка при экспорте: " + ex.getMessage(),
@@ -108,9 +105,7 @@ public class View {
                 formatButton.addActionListener(ev -> {
                     try {
                         FileExporter.exportFormat(formatNode.toString(), Controller.getStorage());
-                        JOptionPane.showMessageDialog(exportDialog,
-                                "Данные успешно экспортированы в формате " + formatNode.toString(),
-                                "Экспорт завершен", JOptionPane.INFORMATION_MESSAGE);
+                    
                     } catch (HeadlessException ex) {
                         JOptionPane.showMessageDialog(exportDialog,
                                 "Ошибка при экспорте: " + ex.getMessage(),

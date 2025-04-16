@@ -10,88 +10,47 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FileExporter {
 
-    public static void exportFormat(String formatName, MonsterStorage storage) throws Exception {
-        // Получаем монстров по формату
-        List<Monster> monsters = storage.getMonstersByFormat(formatName);
-        if (monsters == null || monsters.isEmpty()) {
-            throw new IllegalArgumentException("Нет данных для экспорта в формате " + formatName);
-        }
-
-        // Создаем FileChooser для выбора места сохранения
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Выберите место для сохранения");
-        fileChooser.setSelectedFile(new File("monsters." + formatName.toLowerCase()));
-
-        // Устанавливаем фильтр для соответствующего формата
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                formatName.toUpperCase() + " файлы (*." + formatName.toLowerCase() + ")",
-                formatName.toLowerCase()
-        );
-        fileChooser.setFileFilter(filter);
-
-        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            String filePath = selectedFile.getAbsolutePath();
-
-            // Добавляем расширение, если его нет
-            if (!filePath.toLowerCase().endsWith("." + formatName.toLowerCase())) {
-                filePath += "." + formatName.toLowerCase();
-                selectedFile = new File(filePath);
+    public static void exportFormat(String formatName, MonsterStorage storage) {
+        String directoryPath = selectDirectoryPath();
+        export(formatName, storage, directoryPath);
+    }
+    
+    public static void export(String formatName, MonsterStorage storage, String directoryPath) {
+        try {
+            List<Monster> monsters = storage.getMonstersByFormat(formatName);
+            if (monsters == null || monsters.isEmpty()) {
+                throw new IllegalArgumentException("Нет данных для экспорта в формате " + formatName);
             }
 
+            String fileName = "monsters." + formatName.toLowerCase();
+            String filePath = directoryPath + File.separator + fileName;
+
             switch (formatName.toLowerCase()) {
-                case "json" ->
-                    exportToJson(monsters, filePath);
-                case "xml" ->
-                    exportToXml(monsters, filePath);
-                case "yaml" ->
-                    exportToYaml(monsters, filePath);
+                case "json" -> exportToJson(monsters, filePath);
+                case "xml" -> exportToXml(monsters, filePath);
+                case "yaml" -> exportToYaml(monsters, filePath);
                 default ->
                     throw new IllegalArgumentException("Неподдерживаемый формат: " + formatName);
             }
+
+        } catch (JAXBException | IOException | IllegalArgumentException e) {
+            System.err.println("Ошибка при экспорте в формате " + formatName + ": " + e.getMessage());
         }
     }
 
     public static void exportAllFormats(MonsterStorage storage) {
+        String directoryPath = selectDirectoryPath();
         Map<String, List<Monster>> allFormats = storage.getAllFormats();
         if (allFormats == null || allFormats.isEmpty()) {
-            JOptionPane.showMessageDialog(null,
-                    "Нет данных для экспорта",
-                    "Ошибка",
-                    JOptionPane.ERROR_MESSAGE);
+            System.err.println("Нет данных для экспорта");
             return;
         }
-
-        // Создаем FileChooser для выбора директории
-        JFileChooser dirChooser = new JFileChooser();
-        dirChooser.setDialogTitle("Выберите папку для сохранения всех форматов");
-        dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
-        if (dirChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File directory = dirChooser.getSelectedFile();
-
-            for (String formatName : allFormats.keySet()) {
-                try {
-                    String filePath = new File(directory, "monsters." + formatName.toLowerCase()).getAbsolutePath();
-                    switch (formatName.toLowerCase()) {
-                        case "json" ->
-                            exportToJson(allFormats.get(formatName), filePath);
-                        case "xml" ->
-                            exportToXml(allFormats.get(formatName), filePath);
-                        case "yaml" ->
-                            exportToYaml(allFormats.get(formatName), filePath);
-                    }
-                } catch (JAXBException | IOException e) {
-                    JOptionPane.showMessageDialog(null,
-                            "Ошибка при экспорте формата " + formatName + ": " + e.getMessage(),
-                            "Ошибка", JOptionPane.ERROR_MESSAGE);
-                }
-            }
+        
+        for (String formatName : allFormats.keySet()) {
+            export(formatName, storage, directoryPath);
         }
     }
 
@@ -117,5 +76,18 @@ public class FileExporter {
         try (FileWriter writer = new FileWriter(filePath)) {
             yaml.dump(monsters, writer);
         }
+    }
+    
+    private static String selectDirectoryPath() {
+        JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+
+        int result = fc.showSaveDialog(null);
+        if (result != JFileChooser.APPROVE_OPTION) {
+            return null; 
+        }
+
+        return fc.getSelectedFile().getAbsolutePath();
     }
 }
