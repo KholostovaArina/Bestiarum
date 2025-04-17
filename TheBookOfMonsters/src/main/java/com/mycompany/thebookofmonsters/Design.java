@@ -73,29 +73,20 @@ public class Design {
             return;
         }
 
-        // Создаем пользовательский JPanel для отрисовки фона
         JPanel backgroundPanel = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                // Растягиваем изображение на весь размер панели
                 g.drawImage(bookImage, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        backgroundPanel.setOpaque(false); // Прозрачность фона
+        backgroundPanel.setOpaque(false); 
 
-        // Получаем текущее содержимое JScrollPane
         Component view = panel.getViewport().getView();
 
-        // Если содержимое есть, добавляем его на нашу фоновую панель
-        if (view != null) {
-            backgroundPanel.add(view, BorderLayout.CENTER);
-        }
+        if (view != null) { backgroundPanel.add(view, BorderLayout.CENTER); }
 
-        // Заменяем содержимое JScrollPane на нашу фоновую панель
         panel.setViewportView(backgroundPanel);
-
-        // Делаем JScrollPane и его Viewport прозрачными
         panel.setOpaque(false);
         panel.getViewport().setOpaque(false);
     }

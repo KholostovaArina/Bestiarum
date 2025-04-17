@@ -90,7 +90,6 @@ public class InfoMonsterSheet {
         gbc.fill = GridBagConstraints.BOTH;
         contentPanel.add(descriptionScrollPane, gbc);
 
-        // Параметры (полностью возвращаем ваш исходный вариант с JLabel)
         String[] parameterNames = {
             "Уровень опасности", "Место обитания", "Первое упоминание",
             "Иммунитеты", "Активность", "Рост", "Вес", "Рецепт",
@@ -120,14 +119,12 @@ public class InfoMonsterSheet {
                     parametersPanel.add(label);
                 }
             } else {
-                // Создаем панель для каждого параметра с JLabel и скрытым JTextField
                 JPanel paramPanel = new JPanel(new BorderLayout());
                 paramPanel.setOpaque(false);
 
                 JLabel label = new JLabel(parameterNames[i] + ": " + parameterValues[i]);
                 paramPanel.add(label, BorderLayout.WEST);
 
-                // Скрытое поле для редактирования
                 JTextField editField = new JTextField(parameterValues[i].toString());
                 editField.setVisible(false);
                 editField.setOpaque(false);
@@ -170,8 +167,6 @@ public class InfoMonsterSheet {
                 parametersPanel.add(paramPanel);
             }
         }
-
-        // Добавляем пустые строки (как у вас было)
         parametersPanel.add(new JLabel(""));
         parametersPanel.add(new JLabel(""));
         parametersPanel.add(new JLabel(""));

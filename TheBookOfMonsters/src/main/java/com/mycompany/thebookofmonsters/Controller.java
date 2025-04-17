@@ -69,7 +69,6 @@ public class Controller {
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
 
-        // Создаем описание фильтра
         StringBuilder description = new StringBuilder("Допустимые файлы (");
         for (int i = 0; i < extensions.length; i++) {
             if (i > 0) {
@@ -78,15 +77,12 @@ public class Controller {
             description.append("*.").append(extensions[i]);
         }
         description.append(")");
-
-        // Создаем и устанавливаем фильтр
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 description.toString(),
                 extensions
         );
         fc.setFileFilter(filter);
 
-        // Показываем диалог выбора файла
         if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             return fc.getSelectedFile().getAbsolutePath();
         }
@@ -119,11 +115,9 @@ public class Controller {
             }
         }
 
-        // Обновляем модель дерева
         ((DefaultTreeModel) View.tree.getModel()).reload();
     }
 
-    // Добавляем геттер для доступа к storage
     public static MonsterStorage getStorage() {
         return storage;
     }
