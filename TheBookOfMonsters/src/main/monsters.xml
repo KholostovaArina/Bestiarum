@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<monsters>
+    <monster>
+        <id>1</id>
+        <name>Леший</name>
+        <description>Гибрид человека и лесного духа, охраняющий древние рощи.</description>
+        <dangerLevel>7</dangerLevel>
+        <habitat>в чащах Брокилона и Эдингеля</habitat>
+        <firstMention>1234-06-21</firstMention>
+        <immunities>оглушение, яды</immunities>
+        <activity>ночью</activity>
+        <height>3 м</height>
+        <weight>300 кг</weight>
+        <recipe>корень мандрагоры (3), пепел драконида (1), эссенция полыни</recipe>
+        <time>60</time>
+        <efficiency>умеренная</efficiency>
+        <vulnerability>Неуязвим к магии.</vulnerability>
+    </monster>
+    <monster>
+        <id>2</id>
+        <name>Полуденница</name>
+        <description>Призрак, терроризирующий поля во время жатвы.</description>
+        <dangerLevel>5</dangerLevel>
+        <habitat>на полях Редании и в амбарах Туссента</habitat>
+        <firstMention>1198-07-15</firstMention>
+        <immunities>кровотечение</immunities>
+        <activity>днём</activity>
+        <weight>неосязаем</weight>
+        <recipe>лепестки лунного цветка (2), серебряная нить (1), экстракт чеснока</recipe>
+        <time>30</time>
+        <efficiency>высокая</efficiency>
+        <vulnerability>Уязвима к световой магии.</vulnerability>
+    </monster>
+    <monster>
+        <id>3</id>
+        <name>Катакан</name>
+        <description>Крылатый демон с хвостом скорпиона.</description>
+        <dangerLevel>9</dangerLevel>
+        <habitat>в горных пещерах Туссента</habitat>
+        <firstMention>1150-04-12</firstMention>
+        <immunities>огонь, яды</immunities>
+        <activity>в сумерках</activity>
+        <height>2 м</height>
+        <weight>200 кг</weight>
+        <recipe>жало мантикоры (4), нефритовая пыль (2), спирт Альберихта</recipe>
+        <time>90</time>
+        <efficiency>критическая</efficiency>
+    </monster>
+    <monster>
+        <id>4</id>
+        <name>Кикимора</name>
+        <description>Болотная нежить из гниющих останков.</description>
+        <dangerLevel>6</dangerLevel>
+        <habitat>в топях Вендена</habitat>
+        <firstMention>1221-09-03</firstMention>
+        <immunities>удушье</immunities>
+        <activity>ночью</activity>
+        <height>1 м</height>
+        <weight>15 кг</weight>
+        <recipe>грибы-поганки (5), глаз василиска (1), роса папоротника (3)</recipe>
+        <time>45</time>
+        <efficiency>средняя</efficiency>
+        <vulnerability>Уязвима к земляной магии.</vulnerability>
+    </monster>
+    <monster>
+        <id>5</id>
+        <name>Элементаль льда</name>
+        <description>Дух вечной зимы.</description>
+        <dangerLevel>10</dangerLevel>
+        <habitat>в ледниках Ковира</habitat>
+        <firstMention>1105-12-01</firstMention>
+        <immunities>заморозка, дробление</immunities>
+        <activity>всегда</activity>
+        <height>5 м</height>
+        <weight>не измерим</weight>
+        <recipe>сердце огненного элементаля (1), сера (3), расплавленное железо</recipe>
+        <time>120</time>
+        <efficiency>переменная</efficiency>
+    </monster>
+</monsters>

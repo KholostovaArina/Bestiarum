@@ -4,14 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WelcomeScreen {
-
-    public static JButton btnStart;
-    public static JFrame frameStart;
+    private static JFrame frame;
+    private static JButton startButton;
 
     public static void showPreview() {
-        frameStart = new JFrame("Привет пользователь!");
-        frameStart.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameStart.setSize(400, 300);
+        frame = new JFrame("Привет пользователь!");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(View.brown);
@@ -25,15 +24,27 @@ public class WelcomeScreen {
         text.setOpaque(false);
         text.setForeground(Color.WHITE);
 
-        btnStart = new JButton("OK");
-        btnStart.setBackground(View.bezheviy);
-        btnStart.setFont(Design.getBigFont());
+        startButton = new JButton("OK");
+        startButton.setBackground(View.bezheviy);
+        startButton.setFont(Design.getBigFont());
 
         mainPanel.add(text, BorderLayout.CENTER);
-        mainPanel.add(btnStart, BorderLayout.SOUTH);
+        mainPanel.add(startButton, BorderLayout.SOUTH);
 
-        frameStart.add(mainPanel);
-        frameStart.setLocationRelativeTo(null);
-        frameStart.setVisible(true);
+        frame.add(mainPanel);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+    public static JButton getStartButton() {
+        return startButton;
+    }
+    
+    public static JFrame getStartFrame(){
+        return frame;
+    }
+
+    public static void close() {
+        frame.dispose();
     }
 }

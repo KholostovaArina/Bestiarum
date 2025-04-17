@@ -16,43 +16,43 @@ public class Controller {
 
     private static final MonsterStorage storage = new MonsterStorage();
 
-   public void run() throws Exception {
-    WelcomeScreen.showPreview();
+    public void run() throws Exception {
+        WelcomeScreen.showPreview();
 
-    WelcomeScreen.btnStart.addActionListener(e -> {
-        WelcomeScreen.frameStart.dispose();
-        input = chooseFile("txt");
-        if (input != null) {
-            try {
-                convert();
-                View.createAndShowGUI();                    
-                setTree();
-                
-                View.importBtn.addActionListener(importEvent -> {
-                    fileName = chooseFile("yaml", "json", "xml", "yml");
-                    if (fileName != null) {
-                        try {
-                            parse(fileName);
-                            setTree();
-                        } catch (Exception ex) {
-                            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        WelcomeScreen.getStartButton().addActionListener(e -> {
+            WelcomeScreen.getStartFrame().dispose();
+            input = chooseFile("txt");
+            if (input != null) {
+                try {
+                    convert();
+                    View.createAndShowGUI();
+                    setTree();
+
+                    View.importBtn.addActionListener(importEvent -> {
+                        fileName = chooseFile("yaml", "json", "xml", "yml");
+                        if (fileName != null) {
+                            try {
+                                parse(fileName);
+                                setTree();
+                            } catch (Exception ex) {
+                                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null,
+                                    "Файл не был выбран",
+                                    "Информация",
+                                    JOptionPane.INFORMATION_MESSAGE);
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null,
-                            "Файл не был выбран",
-                            "Информация",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    }
-                });
-                
-            } catch (Exception ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                    });
+
+                } catch (Exception ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                System.exit(0);
             }
-        } else {
-            System.exit(0);
-        }
-    });
-}
+        });
+    }
 
     public static void parse(String fileName) throws Exception {
         XmlParser xmlParser = new XmlParser(storage);
